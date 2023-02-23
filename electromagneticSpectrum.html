@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!-- Page: ADD PAGE NAME HERE -->
+<!-- Author: ADD NAME HERE -->
+<!-- Date: ADD DATE MODIFIED HERE -->
+
+<!-- If you are creating a site with multiple pages, this injected menubar system works very well for keeping all pages with an easy to edit menu bar that stays the same across all pages. -->
+<!-- Review the Applet Template Readme for more information about autoprefixing and minifying your page for deployment   -->
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="initial-scale=1" />
+    <!-- Sets mobile scaling -->
+
+    <title>Electromagnetic Spectrum</title>
+    <!-- ADDITIONAL CSS FILES GO HERE -->
+
+    <!-- Standard CSS -->
+    <!-- REDIRECT ALL TO A COMMON FOLDER ON THE SERVER -->
+    <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.css" type="text/css" />
+
+    <!-- Central standard CSS for Sliders -->
+    <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvs-slider.min.css" type="text/css" />
+
+    <!-- links to template css document -->
+    <!-- ***Remember to change the name here if you rename the template css document*** -->
+    <!-- Use this to overwrite and update any specific styling -->
+    <link rel="stylesheet" href="lib/electromagneticSpectrum.css" type="text/css" />
+  </head>
+
+  <body class="darkMode">
+    <div id="wrapper">
+      <div id="appletContainer">
+        <!-- Accessibility shotcut, DO NOT TOUCH -->
+        <div id="skiptocontent">
+          <a href="#mainContent">Skip to main content</a>
+        </div>
+
+        <!--Menu-->
+        <!-- The infoContainer contains all the elements of the menu -->
+        <!-- This is overwritten by the contents.js injected menubar -->
+        <!-- DO NOT ADJUST #infoContainer, make menubar changes in contents.js -->
+        <nav id="infoContainer" class="menuBar">
+          <!-- DO NOT TOUCH -->
+          <ul class="menu">
+            <!-- DO NOT TOUCH -->
+            <!-- Hamburger menu toggle -->
+            <li class="sideMenuToggle" id="toggleMenuNoHover">
+              <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" /><label
+                for="openSidebarMenu"
+                class="sidebarIconToggle"
+                id="menuButton"
+                ><div class="spinner diagonal part-1"></div>
+                <div class="spinner horizontal"></div>
+                <div class="spinner diagonal part-2"></div>
+              </label>
+            </li>
+            <div id="horizontalMenu">
+              <!-- DO NOT TOUCH -->
+              <!-- <li><a href="contents.html">Contents</a></li> -->
+              <!-- You can enable this to have a fallback menu option if the javascript fails, but you will need to create a contents.html page -->
+            </div>
+            <li id="menuTopLogo">
+              <!-- DO NOT TOUCH -->
+              <a href="http://www.kcvs.ca/" class="topLinkKCVS" target="_blank"
+                ><img src="https://files.lib.kcvs.ca/KCVS_logo_small.png"
+              /></a>
+            </li>
+            <!-- DO NOT TOUCH -->
+          </ul>
+          <!-- DO NOT TOUCH -->
+          <ul id="verticalMenu" class="vertMenuCont"></ul>
+          <!-- DO NOT TOUCH -->
+        </nav>
+        <!-- DO NOT TOUCH -->
+        <!--End of Menu Information-->
+
+        <div class="contentContainer">
+          <!-- DO NOT TOUCH -->
+          <!-- Pop Up Windows/items go here -->
+          <div id="window" class="displayBox shadow"></div>
+          <!-- DO NOT TOUCH -->
+          <div id="bigWindow" class="displayBox shadow"></div>
+          <!-- DO NOT TOUCH -->
+          <div class="tooltipwindow"></div>
+          <!-- DO NOT TOUCH -->
+          <!-- End of Pop Up windows -->
+
+          <main id="mainContent">
+            <!-- DO NOT TOUCH -->
+
+            <h1>Electromagnetic Spectrum</h1>
+
+            <div id="spectrumContainer" class="spectrumContainer">
+              <div id="wavelengthContainer" class="wavelengthContainer">
+                <div class="spectrum">
+                  <div class="wavelengthTitle">Wavelength (metres)</div>
+                  <div class="uvSpectrum"></div>
+                  <div class="visibleSpectrum"></div>
+                  <div class="irSpectrum"></div>
+                  <!-- Wavelengths -->
+                  <div class="wl-12">10<sup>-12</sup></div>
+                  <div class="wl-10">10<sup>-10</sup></div>
+                  <div class="wl-8">10<sup>-8</sup></div>
+                  <div class="wl-6">10<sup>-6</sup></div>
+                  <div class="wl-4">10<sup>-4</sup></div>
+                  <div class="wl-2">10<sup>-2</sup></div>
+                  <div class="wl1">1</div>
+                  <div class="wl2">10<sup>2</sup></div>
+                  <div class="wl4">10<sup>4</sup></div>
+                  <!-- Frequencies -->
+                  <div class="f20">10<sup>20</sup></div>
+                  <div class="f18">10<sup>18</sup></div>
+                  <div class="f16">10<sup>16</sup></div>
+                  <div class="f14">10<sup>14</sup></div>
+                  <div class="f12">10<sup>12</sup></div>
+                  <div class="f10">10<sup>10</sup></div>
+                  <div class="f8">10<sup>8</sup></div>
+                  <div class="f6">10<sup>6</sup></div>
+                  <div class="f4">10<sup>4</sup></div>
+                  <div class="f2">10<sup>2</sup></div>
+                  <!-- Lines -->
+                  <div class="gammaLine"></div>
+                  <div class="xrayLine"></div>
+                  <div class="irLine"></div>
+                  <div class="microwaveLine"></div>
+
+                  <!-- Labels -->
+                  <div class="gammaLabel">&#120574;</div>
+                  <div class="xrayLabel">X rays</div>
+                  <div class="uvLabel">UV</div>
+                  <div class="irLabel">Infrared</div>
+                  <div class="microwaveLabel">Microwave</div>
+                  <div class="radioLabel">Radio</div>
+                  <div class="frequencyTitle">Frequency (Hz)</div>
+                </div>
+              </div>
+              <div class="breakoutBox">
+                <img class="spreadWhite" src="images/spread-white.svg" />
+                <img class="spreadBlack" src="images/spread-black.svg" />
+                <!-- <svg viewbox="0 0 846 100" width="846" height="100">
+                                <line x1="252" y1="0" x2="252" y2="40" style="stroke:white;stroke-width:2" />
+                                <line x1="272" y1="0" x2="272" y2="40" style="stroke:white;stroke-width:2" />
+                                <line x1="0" y1="100" x2="252" y2="40" style="stroke:white;stroke-width:2" />
+                                <line x1="272" y1="40" x2="846" y2="100" style="stroke:white;stroke-width:2" />
+                            </svg> -->
+
+                <!-- 
+                            <div class="dropdown"></div>
+                            <div class="spread"></div> -->
+              </div>
+
+              <div id="wavelengthSliderContainer"></div>
+              <!-- <div id="minWave">380</div>
+                        <div id="visibleSpectrumTitle">Visible Spectrum</div>
+                        <div id="maxWave">780</div> -->
+            </div>
+
+            <div id="waveViewContainer" class="waveViewContainer">
+              <h3 class="waveTitle">Wave View</h3>
+              <div id="waveView" class="waveView"></div>
+              <div id="frequency" class="frequency">Frequency = 5.38 x 10<sup>14</sup></div>
+            </div>
+
+            <div id="photonViewContainer" class="photonViewContainer">
+              <h3 class="photonTitle">Photon View</h3>
+              <div id="photonView" class="photonView"></div>
+              <div id="energy" class="energy">Energy = 2.23 (eV)</div>
+            </div>
+          </main>
+          <!-- Close mainContent -->
+        </div>
+        <div class="licensingContainer">
+          <div>
+            For questions or concerns, please email us at
+            <a href="mailto:kcvs@kingsu.ca">kcvs@kingsu.ca</a>.<br />Content subject to KCVS
+            <a onclick="createWindow('terms', 'normal');">terms of use</a>.<br />Click here to see our
+            <a onclick="createWindow('acknowledgement', 'normal');">land acknowledgement</a>.<br />© The King's Centre
+            for Visualization in Science.
+          </div>
+        </div>
+        <!-- Close contentContainer-->
+      </div>
+      <!-- Close AppletContainer -->
+    </div>
+    <!-- Close Wrapper -->
+
+    <!-- Javascript Scripts Go Here -->
+
+    <script src="https://files.lib.kcvs.ca/jquery-3.3.1.min.js"></script>
+    <!-- DO NOT TOUCH -->
+
+    <script src="lib/contents.js"></script>
+    <!-- Contains the injected menu system and some behavioural elements for the website, as well as pop up information -->
+
+    <!-- These are needed for the Sliders to function. If your page is already using D3 you can skip these -->
+    <script src="https://files.lib.kcvs.ca/d3.min.js" type="text/javascript"></script>
+    <!-- <script src="https://files.lib.kcvs.ca/d3-selection.v1.min.js" type="text/javascript"></script>
+    <script src="https://files.lib.kcvs.ca/d3-drag.v1.min.js" type="text/javascript"></script> -->
+    <!-- The Slider Javascript -->
+    <script src="https://files.lib.kcvs.ca/kcvs-slider.min.js" type="text/javascript"></script>
+    <script src="https://files.lib.kcvs.ca/kcvs-graph.js" type="text/javascript"></script>
+
+    <script src="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.js" type="text/javascript"></script>
+    <!-- DO NOT TOUCH -->
+
+    <script src="lib/electromagneticSpectrum.js" type="text/javascript"></script>
+    <!-- Replace this with js specific to your site or page. -->
+  </body>
+</html>
