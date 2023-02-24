@@ -1,74 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 
 <head>
-  <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet"
-    type="text/css" />
-  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
-  <meta charset="utf-8" />
-  <title>JS Bin</title>
-  <!--[if IE]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  <style>
-    article,
-    aside,
-    figure,
-    footer,
-    header,
-    hgroup,
-    menu,
-    nav,
-    section {
-      display: block;
-    }
-  </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="initial-scale=1" />
+  <!-- Sets mobile scaling -->
+
+  <title>Electromagnetic Spectrum</title>
+  <!-- ADDITIONAL CSS FILES GO HERE -->
+
+  <!-- Standard CSS -->
+  <!-- REDIRECT ALL TO A COMMON FOLDER ON THE SERVER -->
+  <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.css" type="text/css" />
+
+  <!-- Central standard CSS for Sliders -->
+  <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvs-slider.min.css" type="text/css" />
+
+  <!-- links to template css document -->
+  <!-- ***Remember to change the name here if you rename the template css document*** -->
+  <!-- Use this to overwrite and update any specific styling -->
+  <link rel="stylesheet" href="css/electromagneticSpectrum.css" type="text/css" />
 </head>
 
 <body>
-  <input type="file" name="filename" accept="image/gif, image/jpeg, image/png" />
-  <input type="button" value="Visualizza" onclick="caricaFile()" />
-  <canvas id="canvas" height="1000" width="1000"></canvas>
-  <script>
-    const img = new Image();
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    let hoveredColor;
-    let selectedColor;
-    function caricaFile()
-    {
-      let input = document.querySelector('input[type="file"]');
-      let file = input.files[0];
-      img.crossOrigin = "anonymous";
-      img.src = URL.createObjectURL(file);
-      img.addEventListener("load", () => {
-        ctx.drawImage(img, 0, 0);
-        img.style.display = "none";
-        hoveredColor = document.getElementById("hovered-color");
-        selectedColor = document.getElementById("selected-color");
-      });
-    }
+  <table>
+    <thead>
+      <tr>
+        <input type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);" />
+        <th>Source</th>
+        <th>Hovered color</th>
+        <th>Selected color</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <canvas id="canvas" width="1000" height="1000"></canvas>
+        </td>
+        <td class="color-cell" id="hovered-color"></td>
+        <td class="color-cell" id="selected-color"></td>
+      </tr>
+    </tbody>
+  </table>
 
-    function pick(event, destination) {
-      const bounding = canvas.getBoundingClientRect();
-      const x = event.clientX - bounding.left;
-      const y = event.clientY - bounding.top;
-      const pixel = ctx.getImageData(x, y, 1, 1);
-      const data = pixel.data;
-
-      const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-      destination.style.background = rgba;
-      destination.textContent = rgba;
-
-      return rgba;
-    }
-
-    canvas.addEventListener("mousemove", (event) => pick(event, hoveredColor));
-    canvas.addEventListener("click", (event) => pick(event, selectedColor));
+  <div id="wrapper">
+    <div id="appletContainer">
 
 
-  </script>
+      <!--Menu-->
+      <!-- The infoContainer contains all the elements of the menu -->
+      <!-- This is overwritten by the contents.js injected menubar -->
+      <!-- DO NOT ADJUST #infoContainer, make menubar changes in contents.js -->
+      <nav id="infoContainer" class="menuBar">
+        <!-- DO NOT TOUCH -->
+        <ul class="menu">
+          <!-- DO NOT TOUCH -->
+          <!-- Hamburger menu toggle -->
+          <li class="sideMenuToggle" id="toggleMenuNoHover">
+            <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" /><label for="openSidebarMenu"
+              class="sidebarIconToggle" id="menuButton">
+              <div class="spinner diagonal part-1"></div>
+              <div class="spinner horizontal"></div>
+              <div class="spinner diagonal part-2"></div>
+            </label>
+          </li>
+          <div id="horizontalMenu">
+            <!-- DO NOT TOUCH -->
+            <!-- <li><a href="contents.html">Contents</a></li> -->
+            <!-- You can enable this to have a fallback menu option if the javascript fails, but you will need to create a contents.html page -->
+          </div>
+          <li id="menuTopLogo">
+            <!-- DO NOT TOUCH -->
+            <a href="http://www.kcvs.ca/" class="topLinkKCVS" target="_blank"><img
+                src="https://files.lib.kcvs.ca/KCVS_logo_small.png" /></a>
+          </li>
+          <!-- DO NOT TOUCH -->
+        </ul>
+        <!-- DO NOT TOUCH -->
+        <ul id="verticalMenu" class="vertMenuCont"></ul>
+        <!-- DO NOT TOUCH -->
+      </nav>
+      <!-- DO NOT TOUCH -->
+      <!--End of Menu Information-->
+
+      <div class="contentContainer">
+        <!-- DO NOT TOUCH -->
+        <!-- Pop Up Windows/items go here -->
+        <div id="window" class="displayBox shadow"></div>
+        <!-- DO NOT TOUCH -->
+        <div id="bigWindow" class="displayBox shadow"></div>
+        <!-- DO NOT TOUCH -->
+        <div class="tooltipwindow"></div>
+        <!-- DO NOT TOUCH -->
+        <!-- End of Pop Up windows -->
+
+        <main id="mainContent">
+          <!-- DO NOT TOUCH -->
+
+          <h1>Electromagnetic Spectrum</h1>
+
+          <div id="spectrumContainer" class="spectrumContainer">
+            <div class="breakoutBox">
+              <img class="spreadWhite" src="images/spread-white.svg" />
+              <img class="spreadBlack" src="images/spread-black.svg" />
+              <!-- <svg viewbox="0 0 846 100" width="846" height="100">
+                                <line x1="252" y1="0" x2="252" y2="40" style="stroke:white;stroke-width:2" />
+                                <line x1="272" y1="0" x2="272" y2="40" style="stroke:white;stroke-width:2" />
+                                <line x1="0" y1="100" x2="252" y2="40" style="stroke:white;stroke-width:2" />
+                                <line x1="272" y1="40" x2="846" y2="100" style="stroke:white;stroke-width:2" />
+                            </svg> -->
+
+              <!-- 
+                            <div class="dropdown"></div>
+                            <div class="spread"></div> -->
+            </div>
+          </div>
+
+          <div id="waveViewContainer" class="waveViewContainer">
+            <h3 class="waveTitle">Wave View</h3>
+            <div id="waveView" class="waveView"></div>
+            <div id="frequency" class="frequency">Frequency = 5.38 x 10<sup>14</sup></div>
+          </div>
+
+          <div id="photonViewContainer" class="photonViewContainer">
+            <h3 class="photonTitle">Photon View</h3>
+            <div id="photonView" class="photonView"></div>
+            <div id="energy" class="energy">Energy = 2.23 (eV)</div>
+          </div>
+        </main>
+        <!-- Close mainContent -->
+      </div>
+      <!-- Close contentContainer-->
+    </div>
+    <!-- Close AppletContainer -->
+  </div>
+  <!-- Close Wrapper -->
+
+
+
+  <!-- Javascript Scripts Go Here -->
+
+  <script src="https://files.lib.kcvs.ca/jquery-3.3.1.min.js"></script>
+  <!-- DO NOT TOUCH -->
+
+  <script src="js/contents.js"></script>
+  <!-- Contains the injected menu system and some behavioural elements for the website, as well as pop up information -->
+
+  <!-- These are needed for the Sliders to function. If your page is already using D3 you can skip these -->
+  <script src="https://files.lib.kcvs.ca/d3.min.js" type="text/javascript"></script>
+  <!-- <script src="https://files.lib.kcvs.ca/d3-selection.v1.min.js" type="text/javascript"></script>
+    <script src="https://files.lib.kcvs.ca/d3-drag.v1.min.js" type="text/javascript"></script> -->
+  <!-- The Slider Javascript -->
+  <script src="https://files.lib.kcvs.ca/kcvs-slider.min.js" type="text/javascript"></script>
+  <script src="https://files.lib.kcvs.ca/kcvs-graph.js" type="text/javascript"></script>
+
+  <script src="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.js" type="text/javascript"></script>
+  <!-- DO NOT TOUCH -->
+
+  <script src="js/electromagneticSpectrum.js" type="text/javascript"></script>
+  <!-- Replace this with js specific to your site or page. -->
 </body>
 
 </html>

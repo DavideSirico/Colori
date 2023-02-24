@@ -85,8 +85,6 @@ var photonArrayLeft = {
     "y":[]
 };
 
-var RGBValues = [0,0,0];
-
 updateWavelengthArray();
 updatePhotonArray();
 
@@ -94,33 +92,6 @@ updatePhotonArray();
 wavelengthGraph.addLine(wavelengthArray);
 photonGraph.addLine(photonArrayRight);
 photonGraph.addLine(photonArrayLeft);
-
-function updateWavelength(){
-    HSLValues = rgbToHsl(RGBValues);
-    
-    console.log(HSLValues);
-
-}
-
-function rgbToHsl(c) {
-    var r = c[0]/255, g = c[1]/255, b = c[2]/255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-  
-    if(max == min) {
-      h = s = 0; // achromatic
-    } else {
-      var d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch(max){
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
-      }
-      h /= 6;
-    }
-    return new Array(h * 360, s * 100, l * 100);
-  }
 
 
 
@@ -131,6 +102,7 @@ function update(){
     console.log("Current RGB Color: " + currentRGB);
     console.log("Current Frequency: " + currentFreq);
     console.log("Current Energy: " + currentEnergy);
+    updateWavelength();
     console.log("Updated wavelength: " + currentWavelength);
     updateColor();
     console.log("Updated RGB Color: " + currentRGB);
@@ -138,7 +110,6 @@ function update(){
     console.log("Updated Frequency: " + currentFreq);
     updateEnergy();
     console.log("Updated Energy: " + currentEnergy);
-    updateWavelength();
     updateWavelengthArray();
     updatePhotonArray();
     wavelengthGraph.updateLine(wavelengthArray.id, wavelengthArray.x, wavelengthArray.y);
@@ -146,6 +117,10 @@ function update(){
     photonGraph.updateLine(photonArrayLeft.id, photonArrayLeft.x, photonArrayLeft.y);
 }
 
+function updateWavelength(){
+    currentWavelength = visibleSpectrumSlider.currentValue;
+    // currentWavelength = 450;
+}
 
 // Referenced a copepen by Peter Wise for this, who originally referenced Academo.org
 function updateColor(){
@@ -205,12 +180,13 @@ function updateColor(){
     // currentRGB[0]=red;
     // currentRGB[1]=green;
     // currentRGB[2]=blue;
+    currentRGB = "rgb(" + red + "," + green + "," + blue + ")"; 
+
 
     // $('#waveView').css("background",currentRGB);
     // $('#photonView').css("background",currentRGB);
     return;
 }
-
 
 function updateFreq(){
     var c = 2.9979e+17;
@@ -273,62 +249,3 @@ $(document).ready(function() {
     updateHandle();
     update();
 });
-
-
-
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-  
-      reader.onload = function (e) {
-        img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = e.target.result;
-        img.addEventListener('load', () => {
-            ctx.drawImage(img, 0, 0);
-            img.style.display = 'none';
-        });
-      };
-  
-      reader.readAsDataURL(input.files[0]);
-    }
-}
-let img = new Image();
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const hoveredColor = document.getElementById('hovered-color');
-const selectedColor = document.getElementById('selected-color');
-
-
-function pick_hover(event) {
-  const bounding = canvas.getBoundingClientRect();
-  const x = event.clientX - bounding.left;
-  const y = event.clientY - bounding.top;
-  const pixel = ctx.getImageData(x, y, 1, 1);
-  const data = pixel.data;
-
-  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-  hoveredColor.style.background = rgba;
-  hoveredColor.textContent = rgba;
-  return rgba;
-}
-
-function pick_select(event) {
-  const bounding = canvas.getBoundingClientRect();
-  const x = event.clientX - bounding.left;
-  const y = event.clientY - bounding.top;
-  const pixel = ctx.getImageData(x, y, 1, 1);
-  const data = pixel.data;
-
-  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-  selectedColor.style.background = rgba;
-  selectedColor.textContent = rgba;
-  currentRGB = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
-  RGBValues = [data[0],data[1],data[2]];
-  update();
-  return rgba;
-}
-
-canvas.addEventListener('mousemove', event => pick_hover(event));
-canvas.addEventListener('click', event => pick_select(event));

@@ -1,22 +1,3 @@
-var visibleSliderConfig = {
-    containerID: "wavelengthSliderContainer", // Slider will be inserted into this element.
-    inputID: "wavelengthSlider", // ID for the new slider (input box, specifically).
-    inputSize: "5", // Number of characters to display in input box.
-    title: "Visible Spectrum", //Displayed Label
-    min: 380, // Min value for the slider.
-    max: 780, // Max value for the slider.
-    constraintMin: null, // Used to apply min constraint if > min.
-    constraintMax: null, // Used to apply max constraint if < max.
-    step: 10, // Slider step size.  Dummy default.
-    decimal: 0, // Max number of decimal places to display in the input box.
-    default: 550, // Starting value.  Dummy default.
-    showTitle: true, // Show the title?
-    showFill: false, // Fill the left side of the slider?
-    showScale: true, // Show the min and max values?
-    fillFromDefault: false, // Fill from default value instead of left edge?
-    showModified: false, // Show when the slider is not at its default
-};
-
 var wavelengthConfig = {
     graphID: "waveViewGraph", // ID for the SVG context for the graph.
     containerID: "waveView", // Graph will be inserted into this element.
@@ -61,7 +42,6 @@ var photonGraphConfig = {
     slowTransition: 600, // For slower animations, e.g. enter/exit.
 }
 
-var visibleSpectrumSlider = new KCVSSlider(visibleSliderConfig);
 var wavelengthGraph = new KCVSGraph(wavelengthConfig);
 var photonGraph = new KCVSGraph(photonGraphConfig);
 
@@ -85,6 +65,8 @@ var photonArrayLeft = {
     "y":[]
 };
 
+var RGBValues = [0,0,0];
+
 updateWavelengthArray();
 updatePhotonArray();
 
@@ -93,6 +75,43 @@ wavelengthGraph.addLine(wavelengthArray);
 photonGraph.addLine(photonArrayRight);
 photonGraph.addLine(photonArrayLeft);
 
+// FIXME: con il osso molto acceso esplode tutto
+function updateWavelength(){
+
+    HSLValues = rgbToHsl(RGBValues);
+    frequency = 650 - 250 / 270 * HSLValues[0];
+    // min: 380, Min value for the slider.
+    // max: 780, Max value for the slider. 
+    if(frequency < 380){
+        frequency = 380;
+    }
+    if(frequency > 780){
+        frequency = 780;
+    }
+    currentWavelength = frequency;
+    console.log(currentWavelength);
+}
+
+// copiato da stackoverflow
+function rgbToHsl(c) {
+    var r = c[0]/255, g = c[1]/255, b = c[2]/255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if(max == min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max){
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return new Array(h * 360, s * 100, l * 100);
+}
 
 
 function update(){
@@ -102,7 +121,6 @@ function update(){
     console.log("Current RGB Color: " + currentRGB);
     console.log("Current Frequency: " + currentFreq);
     console.log("Current Energy: " + currentEnergy);
-    updateWavelength();
     console.log("Updated wavelength: " + currentWavelength);
     updateColor();
     console.log("Updated RGB Color: " + currentRGB);
@@ -110,6 +128,7 @@ function update(){
     console.log("Updated Frequency: " + currentFreq);
     updateEnergy();
     console.log("Updated Energy: " + currentEnergy);
+    updateWavelength();
     updateWavelengthArray();
     updatePhotonArray();
     wavelengthGraph.updateLine(wavelengthArray.id, wavelengthArray.x, wavelengthArray.y);
@@ -117,12 +136,9 @@ function update(){
     photonGraph.updateLine(photonArrayLeft.id, photonArrayLeft.x, photonArrayLeft.y);
 }
 
-function updateWavelength(){
-    currentWavelength = visibleSpectrumSlidercurrentValue;
-    // currentWavelength = 450;
-}
 
 // Referenced a copepen by Peter Wise for this, who originally referenced Academo.org
+// wavelength to RGB conversion ma non ci dovrebbe servire
 function updateColor(){
     var red = 0;
     var green = 0;
@@ -180,14 +196,14 @@ function updateColor(){
     // currentRGB[0]=red;
     // currentRGB[1]=green;
     // currentRGB[2]=blue;
-    currentRGB = "rgb(" + red + "," + green + "," + blue + ")"; 
-
 
     // $('#waveView').css("background",currentRGB);
     // $('#photonView').css("background",currentRGB);
     return;
 }
 
+
+// Roba matematica
 function updateFreq(){
     var c = 2.9979e+17;
     currentFreq = c/currentWavelength;
@@ -198,6 +214,7 @@ function updateFreq(){
     return;
 }
 
+// Roba matematica
 function updateEnergy(){
     currentEnergy = 1240/currentWavelength;
     currentEnergy = currentEnergy.toPrecision(3);
@@ -206,6 +223,8 @@ function updateEnergy(){
     return;
 }
 
+
+// Non lo so
 function updateWavelengthArray(){
     var n = 100;
     wavelengthArray.x = Array(n);
@@ -249,3 +268,62 @@ $(document).ready(function() {
     updateHandle();
     update();
 });
+
+
+
+// leggo l'immagine dal form e la disegno sul canvas
+function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = e.target.result;
+        img.addEventListener('load', () => {
+            ctx.drawImage(img, 0, 0);
+            img.style.display = 'none';
+        });
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+}
+
+let img = new Image();
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const hoveredColor = document.getElementById('hovered-color');
+const selectedColor = document.getElementById('selected-color');
+
+// funzione che visualizza il colore che si sta hoverando
+function pick_hover(event) {
+  const bounding = canvas.getBoundingClientRect();
+  const x = event.clientX - bounding.left;
+  const y = event.clientY - bounding.top;
+  const pixel = ctx.getImageData(x, y, 1, 1);
+  const data = pixel.data;
+
+  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+  hoveredColor.style.background = rgba;
+  hoveredColor.textContent = rgba;
+  return rgba;
+}
+
+// funzione che visualizza il colore su cui si ha cliccato
+function pick_select(event) {
+  const bounding = canvas.getBoundingClientRect();
+  const x = event.clientX - bounding.left;
+  const y = event.clientY - bounding.top;
+  const pixel = ctx.getImageData(x, y, 1, 1);
+  const data = pixel.data;
+
+  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+  selectedColor.style.background = rgba;
+  selectedColor.textContent = rgba;
+  currentRGB = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+  RGBValues = [data[0],data[1],data[2]];
+  update();
+  return rgba;
+}
+
+canvas.addEventListener('mousemove', event => pick_hover(event));
+canvas.addEventListener('click', event => pick_select(event));

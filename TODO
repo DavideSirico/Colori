@@ -1,0 +1,8 @@
+CSS
+Spiegazione
+Impaginazione
+
+Fixare i bug
+-alcuni colori fanno esplodere il grafico(rosso,bianco e nero)
+-se si carica un'altra immagine non viene cancellata quella precedente
+-mettere a posto le dimensioni
