@@ -103,6 +103,7 @@ function rgbToHsl(c) {
     } else {
       var d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
       switch(max){
         case r: h = (g - b) / d + (g < b ? 6 : 0); break;
         case g: h = (b - r) / d + 2; break;
@@ -198,10 +199,11 @@ function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
-        img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = e.target.result;
-        img.addEventListener('load', () => {
+          img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.src = e.target.result;
+          img.addEventListener('load', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0);
             img.style.display = 'none';
         });
