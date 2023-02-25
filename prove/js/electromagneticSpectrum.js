@@ -79,6 +79,7 @@ photonGraph.addLine(photonArrayLeft);
 function updateWavelength(){
 
     HSLValues = rgbToHsl(RGBValues);
+    console.log(HSLValues);
     frequency = 650 - 250 / 270 * HSLValues[0];
     // min: 380, Min value for the slider.
     // max: 780, Max value for the slider. 
@@ -93,6 +94,7 @@ function updateWavelength(){
 }
 
 // copiato da stackoverflow
+// con rgb 220, 8, 20, 1
 function rgbToHsl(c) {
     var r = c[0]/255, g = c[1]/255, b = c[2]/255;
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -103,6 +105,7 @@ function rgbToHsl(c) {
     } else {
       var d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
       switch(max){
         case r: h = (g - b) / d + (g < b ? 6 : 0); break;
         case g: h = (b - r) / d + 2; break;
@@ -276,10 +279,11 @@ function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
-        img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = e.target.result;
-        img.addEventListener('load', () => {
+          img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.src = e.target.result;
+          img.addEventListener('load', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0);
             img.style.display = 'none';
         });
