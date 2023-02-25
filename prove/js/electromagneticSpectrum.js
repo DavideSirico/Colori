@@ -171,6 +171,7 @@ function updateFreq() {
 
 // Roba matematica
 function updateEnergy() {
+  // 1240  = speed of light * Planck's constant
   currentEnergy = 1240 / currentWavelength;
   currentEnergy = currentEnergy.toPrecision(3);
   var output = "Energy = " + currentFreq + " (eV)";
@@ -241,6 +242,7 @@ function readURL(input) {
           y = canvas.height / 2 - (img.height / 2) * scale;
           // draw the image
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        $("#hovered-color").css("visibility", "visible");
         img.style.display = "none";
       });
     };

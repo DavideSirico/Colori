@@ -514,9 +514,7 @@ h3{
 }
 table{
     width: 70%;
-    margin-left: 15%;
     margin-bottom: 10%;
-
 }
 
 .button {
@@ -582,9 +580,6 @@ table{
 	opacity: 1;
 }
 .bottoneFile{
-    width: 20%;
-    margin-left: 40%;
-    margin-top: 5%;
     margin-bottom: 5%;
     font-size: 120%;
     color: white;
@@ -594,7 +589,7 @@ table{
 }
 body{
     color: black;
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     font-family: 'Ubuntu', sans-serif;
 }
 .neonText {
@@ -608,7 +603,7 @@ body{
         0 0 92px rgba(235, 97, 143, 1),
         0 0 102px rgba(235, 97, 143, 1),
         0 0 151px rgba(235, 97, 143, 1);
-  }
+}
 
   .special{
     font-size: 4.2rem;
@@ -638,19 +633,24 @@ body{
   }
 
 
-  /* Additional styling */
+/* Additional styling */
 
-  .special{
-   font-size: 1.8rem;
-  }
-  .container {
+.special{
+    font-size: 1.8rem;
+}
+.container {
     margin-top: 20vh;
-  }
+}
 
 
-  .special{
+.special{
     text-align: center;
     text-transform: uppercase;
     font-weight: 400;
-  }
+}
 
+#hovered-color
+{
+    text-align: center;
+    visibility: hidden;
+}
