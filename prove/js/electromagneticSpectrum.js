@@ -126,7 +126,6 @@ function update(){
     console.log("Current Frequency: " + currentFreq);
     console.log("Current Energy: " + currentEnergy);
     console.log("Updated wavelength: " + currentWavelength);
-    updateColor();
     console.log("Updated RGB Color: " + currentRGB);
     updateFreq();
     console.log("Updated Energy: " + currentEnergy);
@@ -136,73 +135,6 @@ function update(){
     photonGraph.updateLine(photonArrayRight.id, photonArrayRight.x, photonArrayRight.y);
     photonGraph.updateLine(photonArrayLeft.id, photonArrayLeft.x, photonArrayLeft.y);
 }
-
-
-// Referenced a copepen by Peter Wise for this, who originally referenced Academo.org
-// wavelength to RGB conversion ma non ci dovrebbe servire
-function updateColor(){
-    var red = 0;
-    var green = 0;
-    var blue = 0;
-    var Gamma = 0.80, IntensityMax = 255, factor, red, green, blue;
-    if((currentWavelength >= 380) && (currentWavelength<440)){
-        red = -(currentWavelength - 440) / (440 - 380);
-        green = 0.0;
-        blue = 0.9;
-    }else if((currentWavelength >= 440) && (currentWavelength<490)){
-        red = 0.0;
-        green = (currentWavelength - 440) / (490 - 430);
-        blue = 0.75;
-    }else if((currentWavelength >= 490) && (currentWavelength<510)){
-        red = 0.0;
-        green = 0.85;
-        blue = -(currentWavelength - 510) / (510 - 490);
-    }else if((currentWavelength >= 510) && (currentWavelength<580)){
-        red = (currentWavelength - 510) / (580 - 510);
-        green = 0.85;
-        blue = 0.0;
-    }else if((currentWavelength >= 580) && (currentWavelength<645)){
-        red = 1.0;
-        green = -(currentWavelength - 645) / (645 - 573);
-        blue = 0.0;
-    }else if((currentWavelength >= 645) && (currentWavelength<781)){
-        red = 1.0;
-        green = 0.0;
-        blue = 0.0;
-    }else{
-        red = 0.0;
-        green = 0.0;
-        blue = 0.0;
-    };
-    // Let the intensity fall off near the vision limits
-    if((currentWavelength >= 380) && (currentWavelength<420)){
-        factor = 0.15 + 0.7*(currentWavelength - 380) / (420 - 380);
-    }else if((currentWavelength >= 420) && (currentWavelength<645)){
-        factor = 1.0;
-    }else if((currentWavelength >= 645) && (currentWavelength<781)){
-        factor = 0.3 + 0.7*(780 - currentWavelength) / (780 - 645);
-    }else{
-        factor = 0.0;
-    };
-    if (red !== 0){
-        red = Math.round(IntensityMax * Math.pow(red * factor, Gamma));
-    }
-    if (green !== 0){
-        green = Math.round(IntensityMax * Math.pow(green * factor, Gamma));
-    }
-    if (blue !== 0){
-        blue = Math.round(IntensityMax * Math.pow(blue * factor, Gamma));
-    }
-
-    // currentRGB[0]=red;
-    // currentRGB[1]=green;
-    // currentRGB[2]=blue;
-
-    // $('#waveView').css("background",currentRGB);
-    // $('#photonView').css("background",currentRGB);
-    return;
-}
-
 
 // Roba matematica
 function updateFreq(){
