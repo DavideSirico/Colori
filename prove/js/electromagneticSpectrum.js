@@ -75,26 +75,24 @@ wavelengthGraph.addLine(wavelengthArray);
 photonGraph.addLine(photonArrayRight);
 photonGraph.addLine(photonArrayLeft);
 
-// FIXME: con il osso molto acceso esplode tutto
+// FIXME: con il rosso molto acceso esplode tutto
 function updateWavelength(){
-
     HSLValues = rgbToHsl(RGBValues);
     console.log(HSLValues);
-    frequency = 650 - 250 / 270 * HSLValues[0];
+    frequency = 780 - 400 / 360 * HSLValues[0];
     // min: 380, Min value for the slider.
     // max: 780, Max value for the slider. 
-    if(frequency < 380){
+    /*if(frequency < 380){
         frequency = 380;
     }
     if(frequency > 780){
         frequency = 780;
-    }
+    }*/
     currentWavelength = frequency;
     console.log(currentWavelength);
 }
 
 // copiato da stackoverflow
-// con rgb 220, 8, 20, 1
 function rgbToHsl(c) {
     var r = c[0]/255, g = c[1]/255, b = c[2]/255;
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -119,6 +117,9 @@ function rgbToHsl(c) {
 
 function update(){
     // var inputValue = visibleSpectrumSlider.value;
+    updateWavelength();
+    updateWavelengthArray();
+    updatePhotonArray();
     console.log("Updating Wavelength");
     console.log("Current wavelength: " + currentWavelength);
     console.log("Current RGB Color: " + currentRGB);
@@ -128,12 +129,9 @@ function update(){
     updateColor();
     console.log("Updated RGB Color: " + currentRGB);
     updateFreq();
+    console.log("Updated Energy: " + currentEnergy);
     console.log("Updated Frequency: " + currentFreq);
     updateEnergy();
-    console.log("Updated Energy: " + currentEnergy);
-    updateWavelength();
-    updateWavelengthArray();
-    updatePhotonArray();
     wavelengthGraph.updateLine(wavelengthArray.id, wavelengthArray.x, wavelengthArray.y);
     photonGraph.updateLine(photonArrayRight.id, photonArrayRight.x, photonArrayRight.y);
     photonGraph.updateLine(photonArrayLeft.id, photonArrayLeft.x, photonArrayLeft.y);
@@ -267,10 +265,10 @@ function updateHandle(){
 $('#wavelengthSliderContainer').on('slide.kcvs.slider', update);
 
 // visibleSpectrumSlider.addListener(update());
-$(document).ready(function() {
+/*$(document).ready(function() {
     updateHandle();
     update();
-});
+});*/
 
 
 
