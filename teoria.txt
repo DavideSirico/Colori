@@ -1,88 +1,22 @@
-<!DOCTYPE html>
-<html lang="it">
+Ogni onda della luce ha una lunghezza e una frequenza.
+La relazione tra la lunghezza e la frequenza della luce è data dalla relazione:
+l = v/f
+dove:
+- l = lunghezza d’onda,
+- v = velocità nel mezzo considerato (nel vuoto in genere si indica con c),
+- f = frequenza della radiazione.
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="initial-scale=1" />
-
-  <title>Electromagnetic Spectrum</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-  
-  <!-- <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvs-slider.min.css" type="text/css" /> -->
-  <link rel="stylesheet" href="css/custom.css" type="text/css" />
-  <link rel="stylesheet" href="css/electromagneticSpectrum.css" type="text/css" />
-</head>
-
-<body>
-  <header>
-    <div class="header">
-      <div class="logo">
-        <a href="#">
-          <img src="#" alt="Logo" />
-        </a>
-      </div>
-      <div class="title">
-        <h1>Percezione del colore e onde luminose (Placeholder)</h1>
-      </div>
-    </div>
-  </header>
-  <table>
-    <thead>
-      <tr>
-        <label class="bottoneFile file-selector">
-          <span>Upload File</span>
-          <input class="bottoneFile" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);" >
-        </label>
-      </tr>
-      <tr>
-        <th>Immagine</th>
-        <th>Hovered Color</th>
-        <th>Selected Color</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td width="1%">
-          <canvas id="canvas" width="1000" height="1000"></canvas>
-        </td>
-        <td class="color-cell"><div id="hovered-color"></div></td>
-        <td class="color-cell"><div id="selected-color"></div></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div id="wrapper">
-    <div id="appletContainer">
-
-      <div class="contentContainer">
-        <div id="window" class="displayBox shadow"></div>
-        <div id="bigWindow" class="displayBox shadow"></div>
-        <div class="tooltipwindow"></div>
-
-        <main id="mainContent">
-
-          <h1>Electromagnetic Spectrum</h1>
-
-          <div id="waveViewContainer" class="waveViewContainer">
-            <h3 class="waveTitle">Wave View</h3>
-            <div id="waveView" class="waveView"></div>
-            <div id="frequency" class="frequency">Frequency = 5.38 x 10<sup>14</sup></div>
-          </div>
-
-          <div id="photonViewContainer" class="photonViewContainer">
-            <h3 class="photonTitle">Photon View</h3>
-            <div id="photonView" class="photonView"></div>
-            <div id="energy" class="energy">Energy = 2.23 (eV)</div>
-          </div>
-        </main>
-      </div>
-    </div>
-  </div>
-  <!-- <p>
-    Light Properties - shows the relationship between the speed of light, its wavelength and its frequency. A fairly simple, but important relationship.
+Quando la luce viene assorbita dal corpo opaco che incontra vediamo il nero = ombra = assenza di luce.
+Quando la luce è totalmente riflessa dal corpo opaco che incontra vediamo il bianco = somma di tutti i colori.
+Quindi il nero e il bianco non sono colori ma ombra e luce.
+Quando il corpo opaco che incontra assorbe tutte le onde tranne una, il corpo ha il colore di quell’unica onda (se ad es. il corpo non assorbe il blu, esso è blu).
+In fisica, la luce è descritta come un fascio di particelle, chiamate fotoni, che viaggiano con una velocità pari a circa 300 000 km/s . Queste particelle vibrano con una certa frequenza, associata alla loro energia, e questo ci permette di interpretare la luce come un’ onda.
+L’insieme delle frequenze della luce è racchiuso nello spettro elettromagnetico, di cui l’occhio umano riesce a distinguere solo le frequenze comprese i fra i 400 nanometri (luce ultravioletta) e i 700 nanometri (luce infrarossa), comunemente dette luce visibile. Ogni colore corrisponde esattamente ad una frequenza dello spettro visibile.
+Il colore non è, dunque, una qualità dei corpi, ma della luce stessa.
+ 
+Formula - Light
+________________________________________
+Light Properties - shows the relationship between the speed of light, its wavelength and its frequency. A fairly simple, but important relationship.
 Formula: c =   f where:
 •	c = the speed of light = 300,000 km/s or 3.0 x 108 m/s
 •	  = the wavelength of light, usually measured in meters or Ångströms (1 Å = 10-10 m)
@@ -122,24 +56,3 @@ Formula: V = c  /  where:
 •	  = normal wavelength, can be measured in meters or Å
 You can use this formula to get the velocity of an object. The velocity and the speed of light are in the same units (either km/s or m/s), while the change in wavelength and normal wavelength are also in their same units. By change of wavelength, this is how much the light has been altered or "shifted" from what its normal wavelength should be. The normal wavelength is what it has when it isn't moving, sometimes this is called the "lab" wavelength or "zero velocity" wavelength. In any event,   is the measure between the observed wavelength and the normal or  measured -  , and it can be either positive or negative. When the value of   is positive, that indicates that the wavelengths that are observed are larger than normal, or "red shifted". This indicates motion away from the observer. When the value of   is negative, the wavelength that is observed is smaller than normal, which is called "blue shifted". This means the object is moving towards the observer.
 
-
-  </p> -->
-
-  <!-- Javascript Scripts Go Here -->
-  <script src="https://files.lib.kcvs.ca/jquery-3.3.1.min.js"></script>
-
-  <!-- These are needed for the Sliders to function. If your page is already using D3 you can skip these -->
-  <script src="https://files.lib.kcvs.ca/d3.min.js" type="text/javascript"></script>
-
-  <!-- <script src="https://files.lib.kcvs.ca/d3-selection.v1.min.js" type="text/javascript"></script>
-    <script src="https://files.lib.kcvs.ca/d3-drag.v1.min.js" type="text/javascript"></script> -->
-  <!-- The Slider Javascript -->
-  <script src="https://files.lib.kcvs.ca/kcvs-slider.min.js" type="text/javascript"></script>
-  <script src="https://files.lib.kcvs.ca/kcvs-graph.js" type="text/javascript"></script>
-
-  <script src="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.js" type="text/javascript"></script>
-
-  <script src="js/electromagneticSpectrum.js" type="text/javascript"></script>
-</body>
-
-</html>

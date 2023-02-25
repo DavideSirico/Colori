@@ -648,8 +648,7 @@ body{
     text-transform: uppercase;
     font-weight: 400;
 }
-
-#hovered-color
+.color-cell
 {
     text-align: center;
     visibility: hidden;
@@ -657,6 +656,17 @@ body{
 
 #selected-color
 {
-    text-align: center;
-    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    height: 100px;
+}
+#hovered-color
+{  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    height: 100px;
 }

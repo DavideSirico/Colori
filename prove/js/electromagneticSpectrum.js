@@ -270,8 +270,7 @@ function readURL(input) {
           y = canvas.height / 2 - (img.height / 2) * scale;
         // draw the image
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-        $("#hovered-color").css("visibility", "visible");
-        $("#selected-color").css("visibility", "visible");
+        $(".color-cell").css("visibility", "visible");
         img.style.display = "none";
       });
     };
