@@ -1,37 +1,28 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en-US">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="initial-scale=1" />
 
   <title>Electromagnetic Spectrum</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.css" type="text/css" />
   <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvs-slider.min.css" type="text/css" />
   <link rel="stylesheet" href="css/electromagneticSpectrum.css" type="text/css" />
 </head>
 
 <body>
-  <h1 class="button" id="bottoneTitolo">COLOR PICKER</h1>
-   <div class="topTesto">
-    <h1 class="special"> 1. Choose an image</h1>
-    <h1 class="special"> 2. Use the cursor to choose a color</h1>
-    <h1 class="special"> 3. Watch the waves!</h1>
-  </div>
   <table>
     <thead>
       <tr>
-        <input class="bottoneFile"type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);" />
-        <td>Source</td>
-        <td>Hovered</td>
-        <td>Selected</td>
+        <input type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);" />
+        <th>Source</th>
+        <th>Hovered color</th>
+        <th>Selected color</th>
       </tr>
     </thead>
     <tbody>
-      
       <tr>
         <td>
           <canvas id="canvas" width="1000" height="1000"></canvas>
@@ -41,6 +32,7 @@
       </tr>
     </tbody>
   </table>
+
   <div id="wrapper">
     <div id="appletContainer">
 
