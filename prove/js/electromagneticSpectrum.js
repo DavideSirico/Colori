@@ -46,7 +46,7 @@ var wavelengthGraph = new KCVSGraph(wavelengthConfig);
 var photonGraph = new KCVSGraph(photonGraphConfig);
 
 var currentWavelength = 550;
-var currentRGB = "rgb(206, 224, 0)"; 
+var currentRGB = "rgb(0, 0, 0)"; 
 var currentFreq = 5.45;
 var currentEnergy = 5.45;
 var wavelengthArray = {
@@ -75,7 +75,7 @@ wavelengthGraph.addLine(wavelengthArray);
 photonGraph.addLine(photonArrayRight);
 photonGraph.addLine(photonArrayLeft);
 
-// FIXME: con il rosso molto acceso esplode tutto
+// FIXME: con il rosso molto acceso esplode tutto (forse è normale)
 function updateWavelength(){
     HSLValues = rgbToHsl(RGBValues);
     console.log(HSLValues);
@@ -136,6 +136,7 @@ function update(){
     photonGraph.updateLine(photonArrayLeft.id, photonArrayLeft.x, photonArrayLeft.y);
 }
 
+
 // Roba matematica
 function updateFreq(){
     var c = 2.9979e+17;
@@ -187,20 +188,9 @@ function updatePhotonArray(){
     $('#photonLineLeft').css("stroke",currentRGB);
 }
 
-function updateHandle(){
-    console.log("adding strip");
-    $('#wavelengthSliderHandle').html('<div id="sliderHandleContainer" class="sliderHandleContainer"></div>');
-    $('#sliderHandleContainer').append('<div class="sliderHandleStrip"></div>');
-}
-
-
-$('#wavelengthSliderContainer').on('slide.kcvs.slider', update);
-
-// visibleSpectrumSlider.addListener(update());
-/*$(document).ready(function() {
-    updateHandle();
+$(document).ready(function() {
     update();
-});*/
+});
 
 
 
