@@ -235,8 +235,11 @@ function readURL(input) {
             canvas.width / img.width,
             canvas.height / img.height
           ),
+          // get the top left position of the image
           x = canvas.width / 2 - (img.width / 2) * scale,
+          // get the top left position of the image
           y = canvas.height / 2 - (img.height / 2) * scale;
+          // draw the image
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         img.style.display = "none";
       });
