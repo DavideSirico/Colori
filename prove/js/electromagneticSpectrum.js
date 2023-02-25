@@ -1,3 +1,4 @@
+//Conmfigurazione del grafico onda
 var wavelengthConfig = {
   graphID: "waveViewGraph", // ID for the SVG context for the graph.
   containerID: "waveView", // Graph will be inserted into this element.
@@ -20,6 +21,7 @@ var wavelengthConfig = {
   slowTransition: 600, // For slower animations, e.g. enter/exit.
 };
 
+//Conmfigurazione del grafico fotoni
 var photonGraphConfig = {
   graphID: "photonGraph", // ID for the SVG context for the graph.
   containerID: "photonView", // Graph will be inserted into this element.
@@ -42,9 +44,11 @@ var photonGraphConfig = {
   slowTransition: 600, // For slower animations, e.g. enter/exit.
 };
 
+//Creazione dei grafici
 var wavelengthGraph = new KCVSGraph(wavelengthConfig);
 var photonGraph = new KCVSGraph(photonGraphConfig);
 
+//Creazione dati per i grafici
 var currentWavelength = 550;
 var currentRGB = "rgb(0, 0, 0)";
 var currentFreq = 5.45;
@@ -64,35 +68,93 @@ var photonArrayLeft = {
   x: [],
   y: [],
 };
-
 var RGBValues = [0, 0, 0];
 
+//Primo update dei grafici (valori di default)
 updateWavelengthArray();
 updatePhotonArray();
 
-// wavelengthGraph.markerLines("wavelengthLine",wavelengthArray.y, 'y', true);
+//Disegno i grafici
 wavelengthGraph.addLine(wavelengthArray);
 photonGraph.addLine(photonArrayRight);
 photonGraph.addLine(photonArrayLeft);
 
-// FIXME: con il rosso molto acceso esplode tutto (forse è normale)
+// ===== FUNZIONI:
+
+//Update on ready
+$(document).ready(function () {
+  update();
+});
+
+//Funzione per aggiornare la lunghezza d'onda
 function updateWavelength() {
   HSLValues = rgbToHsl(RGBValues);
   console.log(HSLValues);
   frequency = 780 - (400 / 360) * HSLValues[0];
-  // min: 380, Min value for the slider.
-  // max: 780, Max value for the slider.
-  /*if(frequency < 380){
-        frequency = 380;
-    }
-    if(frequency > 780){
-        frequency = 780;
-    }*/
   currentWavelength = frequency;
   console.log(currentWavelength);
 }
 
-// copiato da stackoverflow
+// Funzione per aggiornare la frequenza
+function updateFreq() {
+  var c = 2.9979e17;
+  currentFreq = c / currentWavelength;
+  currentFreq = currentFreq / 1e14;
+  currentFreq = currentFreq.toPrecision(3);
+  var output = "Frequency = " + currentFreq + " x 10<sup>14</sup>";
+  $("#frequency").html(output);
+  return;
+}
+
+//Funzione per aggiornare l'energia
+function updateEnergy() {
+  currentEnergy = 1240 / currentWavelength;
+  currentEnergy = currentEnergy.toPrecision(3);
+  var output = "Energy = " + currentFreq + " (eV)";
+  $("#energy").html(output);
+  return;
+}
+
+//Funzione per aggiornare l'array per il grafico dell'onda
+function updateWavelengthArray() {
+  var n = 100;
+  wavelengthArray.x = Array(n);
+  wavelengthArray.y = Array(n);
+  for (var i = 0; i < n; i++) {
+    wavelengthArray.x[i] = (wavelengthGraph.getXmax() * i) / n;
+    wavelengthArray.y[i] = Math.sin(
+      (2 * Math.PI * wavelengthArray.x[i]) / currentWavelength
+    );
+  }
+  $("#wavelengthLine").css("stroke", currentRGB);
+}
+
+//Funzione per aggiornare l'array per il grafico dei fotoni
+function updatePhotonArray() {
+  var n = 250;
+  photonArrayRight.x = Array(n);
+  photonArrayRight.y = Array(n);
+  photonArrayLeft.x = Array(n);
+  photonArrayLeft.y = Array(n);
+  for (var i = 0; i < n; i++) {
+    photonArrayRight.x[i] = (photonGraph.getXmax() * i) / n;
+    photonArrayRight.y[i] =
+      1 *
+      Math.exp(-photonArrayRight.x[i]) *
+      Math.sin((5500 / currentWavelength) * photonArrayRight.x[i]);
+  }
+  for (var i = 0; i < n; i++) {
+    photonArrayLeft.x[i] = ((photonGraph.getXmax() * i) / n) * -1;
+    photonArrayLeft.y[i] =
+      1 *
+      Math.exp(photonArrayLeft.x[i]) *
+      Math.sin((5500 / currentWavelength) * photonArrayLeft.x[i]);
+  }
+  $("#photonLineRight").css("stroke", currentRGB);
+  $("#photonLineLeft").css("stroke", currentRGB);
+}
+
+//Convertitore RGB -> HSL
 function rgbToHsl(c) {
   var r = c[0] / 255,
     g = c[1] / 255,
@@ -125,8 +187,8 @@ function rgbToHsl(c) {
   return new Array(h * 360, s * 100, l * 100);
 }
 
+//Funzione per aggiornare tutti i grafici
 function update() {
-  // var inputValue = visibleSpectrumSlider.value;
   updateWavelength();
   updateWavelengthArray();
   updatePhotonArray();
@@ -158,69 +220,14 @@ function update() {
   );
 }
 
-// Roba matematica
-function updateFreq() {
-  var c = 2.9979e17;
-  currentFreq = c / currentWavelength;
-  currentFreq = currentFreq / 1e14;
-  currentFreq = currentFreq.toPrecision(3);
-  var output = "Frequency = " + currentFreq + " x 10<sup>14</sup>";
-  $("#frequency").html(output);
-  return;
-}
+//Dati per le funzioni relative all'immagine
+let img = new Image();
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const hoveredColor = document.getElementById("hovered-color");
+const selectedColor = document.getElementById("selected-color");
 
-// Roba matematica
-function updateEnergy() {
-  currentEnergy = 1240 / currentWavelength;
-  currentEnergy = currentEnergy.toPrecision(3);
-  var output = "Energy = " + currentFreq + " (eV)";
-  $("#energy").html(output);
-  return;
-}
-
-// Non lo so
-function updateWavelengthArray() {
-  var n = 100;
-  wavelengthArray.x = Array(n);
-  wavelengthArray.y = Array(n);
-  for (var i = 0; i < n; i++) {
-    wavelengthArray.x[i] = (wavelengthGraph.getXmax() * i) / n;
-    wavelengthArray.y[i] = Math.sin(
-      (2 * Math.PI * wavelengthArray.x[i]) / currentWavelength
-    );
-  }
-  $("#wavelengthLine").css("stroke", currentRGB);
-}
-
-function updatePhotonArray() {
-  var n = 250;
-  photonArrayRight.x = Array(n);
-  photonArrayRight.y = Array(n);
-  photonArrayLeft.x = Array(n);
-  photonArrayLeft.y = Array(n);
-  for (var i = 0; i < n; i++) {
-    photonArrayRight.x[i] = (photonGraph.getXmax() * i) / n;
-    photonArrayRight.y[i] =
-      1 *
-      Math.exp(-photonArrayRight.x[i]) *
-      Math.sin((5500 / currentWavelength) * photonArrayRight.x[i]);
-  }
-  for (var i = 0; i < n; i++) {
-    photonArrayLeft.x[i] = ((photonGraph.getXmax() * i) / n) * -1;
-    photonArrayLeft.y[i] =
-      1 *
-      Math.exp(photonArrayLeft.x[i]) *
-      Math.sin((5500 / currentWavelength) * photonArrayLeft.x[i]);
-  }
-  $("#photonLineRight").css("stroke", currentRGB);
-  $("#photonLineLeft").css("stroke", currentRGB);
-}
-
-$(document).ready(function () {
-  update();
-});
-
-// leggo l'immagine dal form e la disegno sul canvas
+// Funzione per leggere e stampare l'immagine sul canvas
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -239,7 +246,7 @@ function readURL(input) {
           x = canvas.width / 2 - (img.width / 2) * scale,
           // get the top left position of the image
           y = canvas.height / 2 - (img.height / 2) * scale;
-          // draw the image
+        // draw the image
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         img.style.display = "none";
       });
@@ -248,13 +255,7 @@ function readURL(input) {
   }
 }
 
-let img = new Image();
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const hoveredColor = document.getElementById("hovered-color");
-const selectedColor = document.getElementById("selected-color");
-
-// funzione che visualizza il colore che si sta hoverando
+// Funzione che visualizza il colore su cui si ha il mouse
 function pick_hover(event) {
   const bounding = canvas.getBoundingClientRect();
   const x = event.clientX - bounding.left;
@@ -268,7 +269,7 @@ function pick_hover(event) {
   return rgba;
 }
 
-// funzione che visualizza il colore su cui si ha cliccato
+// Funzione che visualizza il colore su cui si ha cliccato
 function pick_select(event) {
   const bounding = canvas.getBoundingClientRect();
   const x = event.clientX - bounding.left;
@@ -285,5 +286,6 @@ function pick_select(event) {
   return rgba;
 }
 
+// Eventi per il mouse
 canvas.addEventListener("mousemove", (event) => pick_hover(event));
 canvas.addEventListener("click", (event) => pick_select(event));
