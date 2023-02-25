@@ -91,7 +91,7 @@ function updateWavelength() {
   HSLValues = rgbToHsl(RGBValues);
   console.log(HSLValues);
   frequency = 780 - (400 / 360) * HSLValues[0];
-  currentWavelength = frequency;
+  currentWavelength = frequency - 40;
   console.log(currentWavelength);
 }
 
@@ -203,21 +203,23 @@ function update() {
   console.log("Updated Energy: " + currentEnergy);
   console.log("Updated Frequency: " + currentFreq);
   updateEnergy();
-  wavelengthGraph.updateLine(
-    wavelengthArray.id,
-    wavelengthArray.x,
-    wavelengthArray.y
-  );
-  photonGraph.updateLine(
-    photonArrayRight.id,
-    photonArrayRight.x,
-    photonArrayRight.y
-  );
-  photonGraph.updateLine(
-    photonArrayLeft.id,
-    photonArrayLeft.x,
-    photonArrayLeft.y
-  );
+  if (currentWavelength <= 740 && currentWavelength >= 380 && fixColor()) {
+    wavelengthGraph.updateLine(
+      wavelengthArray.id,
+      wavelengthArray.x,
+      wavelengthArray.y
+    );
+    photonGraph.updateLine(
+      photonArrayRight.id,
+      photonArrayRight.x,
+      photonArrayRight.y
+    );
+    photonGraph.updateLine(
+      photonArrayLeft.id,
+      photonArrayLeft.x,
+      photonArrayLeft.y
+    );
+  }
 }
 
 //Dati per le funzioni relative all'immagine
@@ -289,3 +291,13 @@ function pick_select(event) {
 // Eventi per il mouse
 canvas.addEventListener("mousemove", (event) => pick_hover(event));
 canvas.addEventListener("click", (event) => pick_select(event));
+
+function fixColor() {
+  let flag = false;
+  for (let index = 0; index < RGBValues.length; index++) {
+    if (RGBValues[index] == 0) {
+      flag = true;
+    }
+  }
+  return flag;
+}
