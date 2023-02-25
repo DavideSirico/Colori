@@ -204,23 +204,42 @@ function update() {
   console.log("Updated Energy: " + currentEnergy);
   console.log("Updated Frequency: " + currentFreq);
   updateEnergy();
-  if (currentWavelength <= 740 && currentWavelength >= 380 && fixColor()) {
-    wavelengthGraph.updateLine(
-      wavelengthArray.id,
-      wavelengthArray.x,
-      wavelengthArray.y
-    );
-    photonGraph.updateLine(
-      photonArrayRight.id,
-      photonArrayRight.x,
-      photonArrayRight.y
-    );
-    photonGraph.updateLine(
-      photonArrayLeft.id,
-      photonArrayLeft.x,
-      photonArrayLeft.y
-    );
+  
+  // TODO: se il colore è un grigio non aggiorna i grafici e informa l'utente
+  if (!(currentWavelength <= 740 && currentWavelength >= 380 && fixColor()))
+  {
+    // TODO: il colore non fa parte del range visualizzabile (tipo un grigio,nero o bianco)
+    var min = Math.min(RGBValues[0], RGBValues[1], RGBValues[2]);
+    if(min == RGBValues[0])
+    {
+        RGBValues[0] = 0;
+    } else if(min == RGBValues[1])
+    {
+        RGBValues[1] = 0;
+    }
+    else if(min == RGBValues[2])
+    {
+        RGBValues[2] = 0;
+    }
+    console.log("RGBValues: " + RGBValues);
+    updateWavelength();
+    updateWavelengthArray();
   }
+    wavelengthGraph.updateLine(
+        wavelengthArray.id,
+        wavelengthArray.x,
+        wavelengthArray.y
+    );
+    photonGraph.updateLine(
+        photonArrayRight.id,
+        photonArrayRight.x,
+        photonArrayRight.y
+    );
+    photonGraph.updateLine(
+        photonArrayLeft.id,
+        photonArrayLeft.x,
+        photonArrayLeft.y
+    );
 }
 
 //Dati per le funzioni relative all'immagine
@@ -252,6 +271,7 @@ function readURL(input) {
         // draw the image
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         $("#hovered-color").css("visibility", "visible");
+        $("#selected-color").css("visibility", "visible");
         img.style.display = "none";
       });
     };

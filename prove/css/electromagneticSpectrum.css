@@ -654,3 +654,9 @@ body{
     text-align: center;
     visibility: hidden;
 }
+
+#selected-color
+{
+    text-align: center;
+    visibility: hidden;
+}
