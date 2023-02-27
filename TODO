@@ -5,7 +5,7 @@ Impaginazione
 Fixare i bug
 -alcuni colori fanno esplodere il grafico(bianco e nero)
 -i valori del grafico sono un po sballati rispetto al sito originale
-
+-approssimazione del colore allo spettro visibile
 
 cose da fare opzionali 
 +Zoom (https://codepen.io/Zupup/pen/dyqprJK)
