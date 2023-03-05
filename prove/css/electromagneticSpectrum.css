@@ -514,6 +514,7 @@ h3{
 }
 table{
     width: 70%;
+    margin-left: 15%;
     margin-bottom: 10%;
 }
 
@@ -532,6 +533,7 @@ table{
     margin: 5%;
     margin-left: 41%;
 }
+
 
 .button::before {
 	pointer-events: none;
@@ -580,6 +582,9 @@ table{
 	opacity: 1;
 }
 .bottoneFile{
+    width: 20%;
+    margin-left: 40%;
+    margin-top: 5%;
     margin-bottom: 5%;
     font-size: 120%;
     color: white;
@@ -589,7 +594,7 @@ table{
 }
 body{
     color: black;
-    background-color: rgb(255, 255, 255);
+    background-color: black;
     font-family: 'Ubuntu', sans-serif;
 }
 .neonText {
