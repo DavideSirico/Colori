@@ -115,3 +115,30 @@ input[type=file]::file-selector-button {
 input[type=file]::file-selector-button:hover {
   background: #0d45a5;
 }
+
+#immagine {
+  color: #ff0000;
+}
+#colore {
+  color: #00ff00;
+}
+#frequenza {
+  color: #0000ff;
+}
+
+#canvas {
+  max-width: 50vh;
+  max-height: 50vh;
+}
+
+.color-container {
+  height: 50vh;
+  width: 50vw;
+  border: 1px solid black
+}
+
+#color-hue {
+  background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+  width: 45vw;
+  height: 8vh;
+}

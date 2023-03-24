@@ -1,2 +1,2 @@
 # Colori
-sito in sviluppo ./prove/index.html
+sito in sviluppo ./nuovo/index.html

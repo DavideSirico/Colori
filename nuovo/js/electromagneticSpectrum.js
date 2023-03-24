@@ -243,9 +243,9 @@ function update() {
 }
 
 //Dati per le funzioni relative all'immagine
-let img = new Image();
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+// ctx.imageSmoothingEnabled = false;
 const hoveredColor = document.getElementById("hovered-color");
 const selectedColor = document.getElementById("selected-color");
 
@@ -254,12 +254,13 @@ function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function (e) {
-      img = new Image();
+      let img = new Image();
       img.crossOrigin = "anonymous";
       img.src = e.target.result;
       img.addEventListener("load", () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         //scale image to fit canvas
+        /*
         const scale = Math.min(
             canvas.width / img.width,
             canvas.height / img.height
@@ -268,14 +269,20 @@ function readURL(input) {
           x = canvas.width / 2 - (img.width / 2) * scale,
           // get the top left position of the image
           y = canvas.height / 2 - (img.height / 2) * scale;
+          */
         // draw the image
-        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        // ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        canvas.style.width = img.width + "px";
+        canvas.style.height = img.height + "px";
+        ctx.drawImage(img, 0, 0, img.width, img.height);
         $(".color-cell").css("visibility", "visible");
         img.style.display = "none";
       });
     };
     reader.readAsDataURL(input.files[0]);
   }
+  // Scrolla la pagina fino al canvas
+  $('#color-picker')[0].scrollIntoView();
 }
 
 // Funzione che visualizza il colore su cui si ha il mouse
