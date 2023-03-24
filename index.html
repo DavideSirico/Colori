@@ -16,9 +16,9 @@
     <section>
       <div class="starting_page">
         <div>
-          <h1>Inserisci un'immagine.</h1><br />
-          <h1>Prendi il colore.</h1><br />
-          <h1>Scopri la frequenza.</h1><br />
+          <h1>Inserisci un'<span id="immagine">immagine</span>.</h1><br />
+          <h1>Prendi il <span id="colore">colore</span>.</h1><br />
+          <h1>Scopri la <span id="frequenza">frequenza</span>.</h1><br />
           <a class="arrow" href="#file-picker"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
         </div>
       </div>
@@ -33,10 +33,47 @@
     </section>
 
     <section id="color-picker">
-      <canvas id="canvas"></canvas>
+      <div class="color-container">
+        <canvas id="canvas"></canvas>
+        <div id="color-hue"></div>
+      </div>
       <a class="arrow" href="#grafico-1"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
     </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Non sono convinto -->
     <section id="grafico-1">
       <div id="waveViewContainer" class="waveViewContainer">
         <h3 class="waveTitle">Wave View</h3>
@@ -47,6 +84,8 @@
       <a class="arrow" href="#grafico-2"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
     </section>
 
+    
+    <!-- Non sono convinto -->
     <section id="grafico-2">
       <div id="photonViewContainer" class="photonViewContainer">
         <h3 class="photonTitle">Photon View</h3>
