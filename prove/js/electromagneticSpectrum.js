@@ -1,3 +1,7 @@
+$(document).ready(function () {
+  $(this).scrollTop(0);
+});
+
 //Conmfigurazione del grafico onda
 var wavelengthConfig = {
   graphID: "waveViewGraph", // ID for the SVG context for the graph.

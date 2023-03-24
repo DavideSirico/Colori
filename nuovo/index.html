@@ -12,22 +12,49 @@
 </head>
 
 <body>
-  <div class="starting_page">
-    <div>
-      <h1>Inserisci un'immagine.</h1><br />
-      <h1>Prendi il colore.</h1><br />
-      <h1>Scopri la frequenza.</h1><br />
-      <a id="arrow" href="#temp"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
+  <div class="scroll">
+    <section>
+      <div class="starting_page">
+        <div>
+          <h1>Inserisci un'immagine.</h1><br />
+          <h1>Prendi il colore.</h1><br />
+          <h1>Scopri la frequenza.</h1><br />
+          <a class="arrow" href="#file-picker"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
+        </div>
+      </div>
+    </section>
+    <section id="file-picker">
+      <label for="images" class="drop-container">
+        <span class="drop-title">Rilascia la tua immagine qua</span>
+        o
+        <input type="file" id="images" accept="image/*" onchange="readURL(this);" required>
+      </label>
+      <a class="arrow" href="#color-picker"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
+    </section>
+
+    <section id="color-picker">
+      <canvas id="canvas"></canvas>
+      <a class="arrow" href="#grafico-1"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
+    </section>
+
+    <section id="grafico-1">
+      <div id="waveViewContainer" class="waveViewContainer">
+        <h3 class="waveTitle">Wave View</h3>
+        <div id="waveView" class="waveView"></div>
+        <div id="frequency" class="frequency">Frequency = 5.38 x 10<sup>14</sup></div>
+      </div>
+
+      <a class="arrow" href="#grafico-2"><i class="fa-solid fa-chevron-down fa-bounce fa-2xl"></i></a>
+    </section>
+
+    <section id="grafico-2">
+      <div id="photonViewContainer" class="photonViewContainer">
+        <h3 class="photonTitle">Photon View</h3>
+        <div id="photonView" class="photonView"></div>
+        <div id="energy" class="energy">Energy = 2.23 (eV)</div>
+      </div>
+    </section>
     </div>
-  </div>
-
-  <section id="temp">
-    <p>Dio bestia</p>
-  </section>
-
-
-
-
 
 
 
@@ -55,6 +82,7 @@
 
   <script src="https://kit.fontawesome.com/d45470356d.js" crossorigin="anonymous"></script>
 
+  <script src="js/custom.js" type="text/javascript"></script>
   <script src="js/electromagneticSpectrum.js" type="text/javascript"></script>
 </body>
 
