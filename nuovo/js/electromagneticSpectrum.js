@@ -242,62 +242,6 @@ function update() {
     );
 }
 
-//Dati per le funzioni relative all'immagine
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-// ctx.imageSmoothingEnabled = false;
-const hoveredColor = document.getElementById("hovered-color");
-const selectedColor = document.getElementById("selected-color");
-
-// Funzione per leggere e stampare l'immagine sul canvas
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      let img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = e.target.result;
-      img.addEventListener("load", () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //scale image to fit canvas
-        /*
-        const scale = Math.min(
-            canvas.width / img.width,
-            canvas.height / img.height
-          ),
-          // get the top left position of the image
-          x = canvas.width / 2 - (img.width / 2) * scale,
-          // get the top left position of the image
-          y = canvas.height / 2 - (img.height / 2) * scale;
-          */
-        // draw the image
-        // ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-        canvas.style.width = img.width + "px";
-        canvas.style.height = img.height + "px";
-        ctx.drawImage(img, 0, 0, img.width, img.height);
-        $(".color-cell").css("visibility", "visible");
-        img.style.display = "none";
-      });
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-  // Scrolla la pagina fino al canvas
-  $('#color-picker')[0].scrollIntoView();
-}
-
-// Funzione che visualizza il colore su cui si ha il mouse
-function pick_hover(event) {
-  const bounding = canvas.getBoundingClientRect();
-  const x = event.clientX - bounding.left;
-  const y = event.clientY - bounding.top;
-  const pixel = ctx.getImageData(x, y, 1, 1);
-  const data = pixel.data;
-
-  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-  hoveredColor.style.background = rgba;
-  hoveredColor.textContent = rgba;
-  return rgba;
-}
 
 // Funzione che visualizza il colore su cui si ha cliccato
 function pick_select(event) {
@@ -310,15 +254,9 @@ function pick_select(event) {
   const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
   selectedColor.style.background = rgba;
   selectedColor.textContent = rgba;
-  currentRGB = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
-  RGBValues = [data[0], data[1], data[2]];
-  update();
+  
   return rgba;
 }
-
-// Eventi per il mouse
-canvas.addEventListener("mousemove", (event) => pick_hover(event));
-canvas.addEventListener("click", (event) => pick_select(event));
 
 function fixColor() {
   let flag = false;
@@ -328,4 +266,41 @@ function fixColor() {
     }
   }
   return flag;
+}
+
+// eyedrop color picker
+document.getElementById("imgInp").addEventListener("click", () => {
+  textResult = $("#result-text")
+  boxResult = $("#result-box")
+
+  if (!window.EyeDropper) {
+    textResult.text("Your browser does not support the EyeDropper API");
+    return;
+  }
+
+  const eyeDropper = new EyeDropper();
+  const abortController = new AbortController();
+
+  eyeDropper
+    .open({ signal: abortController.signal })
+    .then((result) => {
+      textResult.text(result.sRGBHex);
+      boxResult.css("background-color", result.sRGBHex);
+
+      RGBValues = hexToRgb(result.sRGBHex);
+      currentRGB = `rgb(${RGBValues[0]}, ${RGBValues[1]}, ${RGBValues[2]})`;
+
+      update();
+      $('#grafico-1')[0].scrollIntoView();
+    })
+});
+
+// Funzione che converte un colore in RGB
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? [
+    parseInt(result[1], 16),
+    parseInt(result[2], 16),
+    parseInt(result[3], 16)
+   ] : null;
 }

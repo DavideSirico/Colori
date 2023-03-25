@@ -126,19 +126,57 @@ input[type=file]::file-selector-button:hover {
   color: #0000ff;
 }
 
-#canvas {
-  max-width: 50vh;
-  max-height: 50vh;
+.color-container {
+  height: 60vh;
+  width: 60vw;
+  /* border: 1px solid black */
 }
 
-.color-container {
-  height: 50vh;
-  width: 50vw;
-  border: 1px solid black
-}
 
 #color-hue {
   background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
   width: 45vw;
   height: 8vh;
+}
+
+
+#imgInp {
+  max-width: 40vw;
+  max-height: 40vh;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.color-container {
+  width: 80%;
+  background-color: white;
+}
+
+img {
+  width: 100%
+}
+
+#result-text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 77px;
+  margin-bottom: 25px;
+
+}
+#result-box {
+  width: 0;
+  padding: 80px;
+  border-radius: 14px;
+  background-color: #fff;
 }
