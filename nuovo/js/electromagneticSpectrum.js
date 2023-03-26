@@ -242,22 +242,6 @@ function update() {
     );
 }
 
-
-// Funzione che visualizza il colore su cui si ha cliccato
-function pick_select(event) {
-  const bounding = canvas.getBoundingClientRect();
-  const x = event.clientX - bounding.left;
-  const y = event.clientY - bounding.top;
-  const pixel = ctx.getImageData(x, y, 1, 1);
-  const data = pixel.data;
-
-  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-  selectedColor.style.background = rgba;
-  selectedColor.textContent = rgba;
-  
-  return rgba;
-}
-
 function fixColor() {
   let flag = false;
   for (let index = 0; index < RGBValues.length; index++) {
@@ -295,7 +279,7 @@ document.getElementById("imgInp").addEventListener("click", () => {
     })
 });
 
-// Funzione che converte un colore in RGB
+// Funzione che converte un colore(#ff3f3f) in RGB
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? [

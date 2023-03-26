@@ -7,12 +7,14 @@ Fixare i bug
 -i valori del grafico sono un po sballati rispetto al sito originale
 -approssimazione del colore allo spettro visibile
 
-cose da fare opzionali 
-+Zoom (https://codepen.io/Zupup/pen/dyqprJK)
-+Griglia con i pixel
 
 aggiungere un'immagine di default
 aggiugnere un'immagine gradiente di default
 
 Style:
 -cambiare i colori delle parole nel titolo
+
+
+
+
+responsive
