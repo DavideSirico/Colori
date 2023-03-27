@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="initial-scale=1" />
+
+  <title>Electromagnetic Spectrum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  
+  <!-- <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://files.lib.kcvs.ca/kcvs-slider.min.css" type="text/css" /> -->
+  <link rel="stylesheet" href="css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="css/electromagneticSpectrum.css" type="text/css" />
+</head>
+
+<body>
+  <div class="topTesto">
+    <h1 class="special button" id="bottoneTitolo">COLOR PICKER</h1>
+    <h1 class="special"> 1. Choose an image</h1>
+    <h1 class="special"> 2. Use the cursor to choose a color</h1>
+    <h1 class="special"> 3. Watch the waves!</h1>
+ </div>
+  <!-- <header>
+    <div class="header">
+      <div class="logo">
+        <a href="#">
+          <img src="#" alt="Logo" />
+        </a>
+      </div>
+      <div class="title">
+        <h1>Percezione del colore e onde luminose (Placeholder)</h1>
+      </div>
+    </div>
+  </header> -->
+  <table>
+    <thead>
+      <tr>
+        <label class="bottoneFile file-selector">
+          <span>Upload File</span>
+          <input class="bottoneFile" type="file" name="filename" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);" >
+        </label>
+        <td>Source</td>
+        <td>Hovered</td>
+        <td>Selected</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td width="1%">
+          <canvas id="canvas" width="" height=""></canvas>
+        </td>
+        <td class="color-cell"><div id="hovered-color"></div></td>
+        <td class="color-cell"><div id="selected-color"></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="wrapper">
+    <div id="appletContainer">
+
+      <div class="contentContainer">
+        <div id="window" class="displayBox shadow"></div>
+        <div id="bigWindow" class="displayBox shadow"></div>
+        <div class="tooltipwindow"></div>
+
+        <main id="mainContent">
+
+          <h1>Spettro elettromagnetico</h1>
+
+          <div id="waveViewContainer" class="waveViewContainer">
+            <h3 class="waveTitle">Wave View</h3>
+            <div id="waveView" class="waveView"></div>
+            <div id="frequency" class="frequency">Frequency = 5.38 x 10<sup>14</sup></div>
+          </div>
+
+          <div id="photonViewContainer" class="photonViewContainer">
+            <h3 class="photonTitle">Photon View</h3>
+            <div id="photonView" class="photonView"></div>
+            <div id="energy" class="energy">Energy = 2.23 (eV)</div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <!-- <p>
+    Light Properties - shows the relationship between the speed of light, its wavelength and its frequency. A fairly simple, but important relationship.
+Formula: c =   f where:
+•	c = the speed of light = 300,000 km/s or 3.0 x 108 m/s
+•	  = the wavelength of light, usually measured in meters or Ångströms (1 Å = 10-10 m)
+•	f = the frequency at which light waves pass by, measured in units of per seconds (1/s).
+This is a very important relationship since it tells you several things - first of all, the speed of light is constant - it never changes (as far as we're concerned in this class). So the left side of the formula always has the same value. That means if you change something on the right side (either the wavelength or the frequency) then the other thing has to also change, but in the opposite sense. So if the wavelength goes down the frequency goes up, and vice versa.
+Energy of a photon - There are two versions of this formula, one using the frequency, the other using the wavelength. The basic upshot is that as frequency goes up, so does energy, however wavelength goes down. So as wavelength goes up frequency and energy go down. This formula is for the energy of an individual photon. In general, only relational values will be needed (no exact values calculated).
+
+Formula: E = h f where:
+•	E = Energy of the photon (in Joules)
+•	h = Constant, actually known as Planck's constant, a really ugly number
+•	f = frequency of the light in units of per seconds (1/seconds)
+The second version of the formula is found by using the light properties formula (c =   f) and substituting that in for the above relation. The result is how the energy depends upon the wavelength of light.
+Formula: E = hc/  where:
+•	E = Energy of the photon (in Joules)
+•	h = same constant as before, still ugly
+•	c = speed of light, another constant
+•	  = wavelength of the light, usually in units of meters
+Wien's Law - This law is used for black bodies, perfect radiation (light) emitters and absorbers and indicates at which wavelength they tend to give off most of their light. This law is used to explain why the colors of objects change as you change their temperatures.
+
+Formula:  max=0.0029/T where:
+•	 max = wavelength where most of the light is emitted, measured in meters
+•	T = temperature of the object, in degrees Kelvin (K)
+The constant in the formula shows how these two things are related, and could be different if you measured the wavelength or temperature in different units. Basically as the temperature goes up,  max goes up and vice versa.
+Stefan-Boltzmann Law - This law is used for black bodies, perfect radiation (light) emitters and absorbers and indicates how much total energy they give off. Interesting thing to note - the energy they give off depends only on their temperatures, nothing else about the object matters (like what it is made of). Also this measure the total energy given off, so all energy at all wavelengths is what this indicates.
+
+Formula: Etotal =  T4 where:
+•	Etotal = total amount of energy given off, measured in Watts/square meter.
+•	  = another ugly constant
+•	T = temperature of the object, in degrees Kelvin (K)
+Generally this is one of those relational formulas, where I would ask, if you increase/decrease T by a certain amount, how does that change the value of the total energy given off. But you have to be careful, T is taken to the fourth power, so a small change in it results in a very large change in the total amount of energy given off.
+Doppler Effect - One of the most important formulas in astronomy since it helps us to figure out how fast things are moving towards/away from us, just by looking at how their light is altered. It doesn't show motion that is perpendicular to our line of sight, but just velocity towards or away from us, so it does have its limitations.
+
+Formula: V = c  /  where:
+•	V = velocity of object, in km/s or m/s (depending on how the speed of light is measured)
+•	c = speed of light, either 300,000 km/s or 3.0 x 108 m/s
+•	  = change in wavelength from the normal, can be measured in meters of Å
+•	  = normal wavelength, can be measured in meters or Å
+You can use this formula to get the velocity of an object. The velocity and the speed of light are in the same units (either km/s or m/s), while the change in wavelength and normal wavelength are also in their same units. By change of wavelength, this is how much the light has been altered or "shifted" from what its normal wavelength should be. The normal wavelength is what it has when it isn't moving, sometimes this is called the "lab" wavelength or "zero velocity" wavelength. In any event,   is the measure between the observed wavelength and the normal or  measured -  , and it can be either positive or negative. When the value of   is positive, that indicates that the wavelengths that are observed are larger than normal, or "red shifted". This indicates motion away from the observer. When the value of   is negative, the wavelength that is observed is smaller than normal, which is called "blue shifted". This means the object is moving towards the observer.
+
+
+  </p> -->
+
+  <!-- Javascript Scripts Go Here -->
+  <script src="https://files.lib.kcvs.ca/jquery-3.3.1.min.js"></script>
+
+  <!-- These are needed for the Sliders to function. If your page is already using D3 you can skip these -->
+  <script src="https://files.lib.kcvs.ca/d3.min.js" type="text/javascript"></script>
+
+  <!-- <script src="https://files.lib.kcvs.ca/d3-selection.v1.min.js" type="text/javascript"></script>
+    <script src="https://files.lib.kcvs.ca/d3-drag.v1.min.js" type="text/javascript"></script> -->
+  <!-- The Slider Javascript -->
+  <script src="https://files.lib.kcvs.ca/kcvs-slider.min.js" type="text/javascript"></script>
+  <script src="https://files.lib.kcvs.ca/kcvs-graph.js" type="text/javascript"></script>
+
+  <script src="https://files.lib.kcvs.ca/kcvsTheme.4.current.min.js" type="text/javascript"></script>
+
+  <script src="js/electromagneticSpectrum.js" type="text/javascript"></script>
+</body>
+
+</html>
