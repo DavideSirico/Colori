@@ -184,7 +184,8 @@ function update() {
   let hue = rgbToHsl(RGBValues)[0];
   if(hue == -1)
   {
-    console.log("clanc");
+    console.log("clanc" + currentRGB);
+    $("#result-box").css("background-color", currentRGB);
     $("#result-text").text("Non è possibile visualizzare il colore selezionato");
     return;
   }
@@ -223,7 +224,6 @@ function update() {
 //Dati per le funzioni relative all'immagine
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
 // Funzione per leggere e stampare l'immagine sul canvas
 function drawCanvas(input) {
   if (input.files && input.files[0]) {
@@ -234,15 +234,22 @@ function drawCanvas(input) {
       img.src = e.target.result;
       img.addEventListener("load", () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(0,0,canvas.width, canvas.height);
 
-        // l'immagine deve essere scalata max 40 vh e 40 vw
-        var ratio = Math.min(vh(40) / img.height, vw(40) / img.width);
-        
-        canvas.width = img.width * ratio;
-        canvas.height = img.height * ratio;
+        // l'immagine deve essere scalata max 60 vh e 60 vw
+        var ratioX = vw(60) / img.width;
+        var ratioY = vh(60) / img.height;
 
-        ctx.drawImage(img, 0,0, img.width*ratio, img.height*ratio);
+        var ratio = Math.min(ratioX, ratioY);
+
+        canvas.width = img.width * ratioX;
+        canvas.height = img.height * ratioY;
+        x = canvas.width / 2 - (img.width / 2) * ratio,
+        // get the top left position of the image
+        y = canvas.height / 2 - (img.height / 2) * ratio;
+        // canvas.width = img.width * ratio;
+        // canvas.height = img.height * ratio;
+        // IO ODIO IL CSS E IL JS PORCACCINA
+        ctx.drawImage(img, x,y, img.width*ratio, img.height*ratio);
       });
     };
     reader.readAsDataURL(input.files[0]);
@@ -309,13 +316,14 @@ function hexToRgb(hex) {
 
 function pick_select(event) {
   const bounding = canvas.getBoundingClientRect();
-  const x = event.clientX - bounding.left;
-  const y = event.clientY - bounding.top;
+  const x = event.clientX - bounding.x;
+  const y = event.clientY - bounding.y;
   const pixel = ctx.getImageData(x, y, 1, 1);
   const data = pixel.data;
 
   const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
   currentRGB = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+
   RGBValues = [data[0], data[1], data[2]];
 
   textResult = $("#result-text");
