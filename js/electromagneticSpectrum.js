@@ -70,29 +70,17 @@ var photonArrayLeft = {
 };
 var RGBValues = [0, 0, 0];
 
-//Primo update dei grafici (valori di default)
-updateWavelengthArray();
-updatePhotonArray();
-
 //Disegno i grafici
 wavelengthGraph.addLine(wavelengthArray);
 photonGraph.addLine(photonArrayRight);
 photonGraph.addLine(photonArrayLeft);
 
-// ===== FUNZIONI:
-
-//Update on ready
-$(document).ready(function () {
-  update();
-});
-
 //Funzione per aggiornare la lunghezza d'onda
 function updateWavelength() {
-  HSLValues = rgbToHsl(RGBValues);
-  console.log(HSLValues);
-  frequency = 780 - (400 / 360) * HSLValues[0];
+  var hue = rgbToHsl(RGBValues)[0];
+  frequency = 780 - (400 / 360) * hue;
   currentWavelength = frequency - 40;
-  console.log(currentWavelength);
+  /* approssimazione molto approssimata */
 }
 
 // Funzione per aggiornare la frequenza
@@ -127,6 +115,7 @@ function updateWavelengthArray() {
       (2 * Math.PI * wavelengthArray.x[i]) / currentWavelength
     );
   }
+  // TODO: il colore non sempre va bene
   $("#wavelengthLine").css("stroke", currentRGB);
 }
 
@@ -151,6 +140,7 @@ function updatePhotonArray() {
       Math.exp(photonArrayLeft.x[i]) *
       Math.sin((5500 / currentWavelength) * photonArrayLeft.x[i]);
   }
+  // TODO: il colore non sempre va bene
   $("#photonLineRight").css("stroke", currentRGB);
   $("#photonLineLeft").css("stroke", currentRGB);
 }
@@ -168,6 +158,7 @@ function rgbToHsl(c) {
 
   if (max == min) {
     h = s = 0; // achromatic
+    return new Array(-1,0,0);
   } else {
     var d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -190,6 +181,14 @@ function rgbToHsl(c) {
 
 //Funzione per aggiornare tutti i grafici
 function update() {
+  let hue = rgbToHsl(RGBValues)[0];
+  if(hue == -1)
+  {
+    console.log("clanc");
+    $("#result-text").text("Non è possibile visualizzare il colore selezionato");
+    return;
+  }
+  $('#grafico-1')[0].scrollIntoView();
   updateWavelength();
   updateWavelengthArray();
   updatePhotonArray();
@@ -205,53 +204,22 @@ function update() {
   console.log("Updated Frequency: " + currentFreq);
   updateEnergy();
   
-  // TODO: se il colore è un grigio non aggiorna i grafici e informa l'utente
-  if (!(currentWavelength <= 740 && currentWavelength >= 380 && fixColor()))
-  {
-    // TODO: il colore non fa parte del range visualizzabile (tipo un grigio,nero o bianco)
-    var min = Math.min(RGBValues[0], RGBValues[1], RGBValues[2]);
-    if(min == RGBValues[0])
-    {
-        RGBValues[0] = 0;
-    } else if(min == RGBValues[1])
-    {
-        RGBValues[1] = 0;
-    }
-    else if(min == RGBValues[2])
-    {
-        RGBValues[2] = 0;
-    }
-    console.log("RGBValues: " + RGBValues);
-    updateWavelength();
-    updateWavelengthArray();
-  }
-    wavelengthGraph.updateLine(
-        wavelengthArray.id,
-        wavelengthArray.x,
-        wavelengthArray.y
-    );
-    photonGraph.updateLine(
-        photonArrayRight.id,
-        photonArrayRight.x,
-        photonArrayRight.y
-    );
-    photonGraph.updateLine(
-        photonArrayLeft.id,
-        photonArrayLeft.x,
-        photonArrayLeft.y
-    );
+  wavelengthGraph.updateLine(
+      wavelengthArray.id,
+      wavelengthArray.x,
+      wavelengthArray.y
+  );
+  photonGraph.updateLine(
+      photonArrayRight.id,
+      photonArrayRight.x,
+      photonArrayRight.y
+  );
+  photonGraph.updateLine(
+      photonArrayLeft.id,
+      photonArrayLeft.x,
+      photonArrayLeft.y
+  );
 }
-
-function fixColor() {
-  let flag = false;
-  for (let index = 0; index < RGBValues.length; index++) {
-    if (RGBValues[index] == 0) {
-      flag = true;
-    }
-  }
-  return flag;
-}
-
 //Dati per le funzioni relative all'immagine
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -266,28 +234,31 @@ function drawCanvas(input) {
       img.src = e.target.result;
       img.addEventListener("load", () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //scale image to fit canvas
-        /*
-        const scale = Math.min(
-            canvas.width / img.width,
-            canvas.height / img.height
-          ),
-          // get the top left position of the image
-          x = canvas.width / 2 - (img.width / 2) * scale,
-          // get the top left position of the image
-          y = canvas.height / 2 - (img.height / 2) * scale;
-          */
-        // draw the image
-        // ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-        canvas.style.width = img.width + "px";
-        canvas.style.height = img.height + "px";
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+
+        // l'immagine deve essere scalata max 40 vh e 40 vw
+        var ratio = Math.min(vh(40) / img.height, vw(40) / img.width);
+        
+        canvas.width = img.width * ratio;
+        canvas.height = img.height * ratio;
+
+        ctx.drawImage(img, 0,0, img.width*ratio, img.height*ratio);
       });
     };
     reader.readAsDataURL(input.files[0]);
   }
   // Scrolla la pagina fino al canvas
   $('#color-picker')[0].scrollIntoView();
+}
+
+function vh(v) {
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  return (v * h) / 100;
+}
+
+function vw(v) {
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  return (v * w) / 100;
 }
 
 // eyedrop color picker
@@ -312,11 +283,11 @@ if(window.EyeDropper) {
         textResult.text(result.sRGBHex);
         boxResult.css("background-color", result.sRGBHex);
 
+        // valori numerici RGB
         RGBValues = hexToRgb(result.sRGBHex);
+        // stringa rgb(r,g,b);
         currentRGB = `rgb(${RGBValues[0]}, ${RGBValues[1]}, ${RGBValues[2]})`;
-
         update();
-        $('#grafico-1')[0].scrollIntoView();
       })
   });
 } else {
@@ -352,8 +323,6 @@ function pick_select(event) {
 
   textResult.text(currentRGB);
   boxResult.css("background-color", currentRGB);
-
-  $('#grafico-1')[0].scrollIntoView();
 
   update();
   return rgba;
