@@ -101,7 +101,14 @@ a {
   border-radius: 5px;
   font-weight: 700;
   color: #57514a;
-  background: linear-gradient(-45deg, #ff004c, #ffbb00, #a2e258, #58d2e2, #3379b3);
+  background: linear-gradient(
+    -45deg,
+    #ff004c,
+    #ffbb00,
+    #a2e258,
+    #58d2e2,
+    #3379b3
+  );
   padding: 0.5em 3em 0.5em 3em;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -130,7 +137,16 @@ a {
 }
 
 #color-hue {
-  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  background-image: linear-gradient(
+    to right,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
   width: 45vw;
   height: 8vh;
 }
@@ -157,11 +173,13 @@ a {
 }
 
 .canvas {
-  border: 0.2em dotted black;
   width: 100%;
   min-width: 100%;
   height: 100%;
   min-height: 100%;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .result-text {
@@ -185,4 +203,4 @@ a {
   padding: 80px;
   border-radius: 14px;
   background-color: #fff;
-}/*# sourceMappingURL=custom.css.map */
+} /*# sourceMappingURL=custom.css.map */
