@@ -252,32 +252,79 @@ function fixColor() {
   return flag;
 }
 
-// eyedrop color picker
-document.getElementById("imgInp").addEventListener("click", () => {
-  textResult = $("#result-text")
-  boxResult = $("#result-box")
+//Dati per le funzioni relative all'immagine
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-  if (!window.EyeDropper) {
-    textResult.text("Your browser does not support the EyeDropper API");
-    return;
+// Funzione per leggere e stampare l'immagine sul canvas
+function drawCanvas(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      let img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = e.target.result;
+      img.addEventListener("load", () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //scale image to fit canvas
+        /*
+        const scale = Math.min(
+            canvas.width / img.width,
+            canvas.height / img.height
+          ),
+          // get the top left position of the image
+          x = canvas.width / 2 - (img.width / 2) * scale,
+          // get the top left position of the image
+          y = canvas.height / 2 - (img.height / 2) * scale;
+          */
+        // draw the image
+        // ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        canvas.style.width = img.width + "px";
+        canvas.style.height = img.height + "px";
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+      });
+    };
+    reader.readAsDataURL(input.files[0]);
   }
+  // Scrolla la pagina fino al canvas
+  $('#color-picker')[0].scrollIntoView();
+}
 
-  const eyeDropper = new EyeDropper();
-  const abortController = new AbortController();
+// eyedrop color picker
+if(window.EyeDropper) {
+  $("#imgInp").show();
+  $("canvas").hide();
+  document.getElementById("imgInp").addEventListener("click", () => {
+    textResult = $("#result-text");
+    boxResult = $("#result-box");
 
-  eyeDropper
-    .open({ signal: abortController.signal })
-    .then((result) => {
-      textResult.text(result.sRGBHex);
-      boxResult.css("background-color", result.sRGBHex);
+    if (!window.EyeDropper) {
+      textResult.text("Your browser does not support the EyeDropper API");
+      return;
+    }
 
-      RGBValues = hexToRgb(result.sRGBHex);
-      currentRGB = `rgb(${RGBValues[0]}, ${RGBValues[1]}, ${RGBValues[2]})`;
+    const eyeDropper = new EyeDropper();
+    const abortController = new AbortController();
 
-      update();
-      $('#grafico-1')[0].scrollIntoView();
-    })
-});
+    eyeDropper
+      .open({ signal: abortController.signal })
+      .then((result) => {
+        textResult.text(result.sRGBHex);
+        boxResult.css("background-color", result.sRGBHex);
+
+        RGBValues = hexToRgb(result.sRGBHex);
+        currentRGB = `rgb(${RGBValues[0]}, ${RGBValues[1]}, ${RGBValues[2]})`;
+
+        update();
+        $('#grafico-1')[0].scrollIntoView();
+      })
+  });
+} else {
+  console.log("EyeDropper API not supported");
+  canvas.addEventListener("click", (event) => pick_select(event));
+  $("#imgInp").hide();
+  $("canvas").show();
+}
 
 // Funzione che converte un colore(#ff3f3f) in RGB
 function hexToRgb(hex) {
@@ -287,4 +334,27 @@ function hexToRgb(hex) {
     parseInt(result[2], 16),
     parseInt(result[3], 16)
    ] : null;
+}
+
+function pick_select(event) {
+  const bounding = canvas.getBoundingClientRect();
+  const x = event.clientX - bounding.left;
+  const y = event.clientY - bounding.top;
+  const pixel = ctx.getImageData(x, y, 1, 1);
+  const data = pixel.data;
+
+  const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+  currentRGB = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+  RGBValues = [data[0], data[1], data[2]];
+
+  textResult = $("#result-text");
+  boxResult = $("#result-box");
+
+  textResult.text(currentRGB);
+  boxResult.css("background-color", currentRGB);
+
+  $('#grafico-1')[0].scrollIntoView();
+
+  update();
+  return rgba;
 }
