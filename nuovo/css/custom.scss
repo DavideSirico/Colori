@@ -86,7 +86,6 @@ a {
   text-align: center;
   transition: color 0.2s ease-in-out;
 }
-
 .filePicker {
   width: 0.1px;
   height: 0.1px;
@@ -95,7 +94,6 @@ a {
   position: absolute;
   z-index: -1;
 }
-
 .filePicker + label {
   font-size: 1.25rem;
   border-radius: 5px;
@@ -121,11 +119,9 @@ a {
 .immagine {
   color: #ff004c;
 }
-
 .colore {
   color: #a2e258;
 }
-
 .frequenza {
   color: #338eb3;
 }
@@ -173,13 +169,11 @@ a {
 }
 
 .canvas {
+  border: 0.2em dotted black;
   width: 100%;
   min-width: 100%;
   height: 100%;
   min-height: 100%;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .result-text {
@@ -197,10 +191,9 @@ a {
   margin-top: 77px;
   margin-bottom: 25px;
 }
-
 .result-box {
   width: 0;
   padding: 80px;
   border-radius: 14px;
   background-color: #fff;
-} /*# sourceMappingURL=custom.css.map */
+}
