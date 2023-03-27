@@ -17,7 +17,8 @@ ul {
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: calc(30px + 2vw);
+  /* font-size: 6rem; */
   font-weight: 600;
   margin-bottom: 0px;
 }
