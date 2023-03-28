@@ -115,7 +115,6 @@ function updateWavelengthArray() {
       (2 * Math.PI * wavelengthArray.x[i]) / currentWavelength
     );
   }
-  // TODO: il colore non sempre va bene
   $("#wavelengthLine").css("stroke", currentRGB);
 }
 
@@ -140,7 +139,6 @@ function updatePhotonArray() {
       Math.exp(photonArrayLeft.x[i]) *
       Math.sin((5500 / currentWavelength) * photonArrayLeft.x[i]);
   }
-  // TODO: il colore non sempre va bene
   $("#photonLineRight").css("stroke", currentRGB);
   $("#photonLineLeft").css("stroke", currentRGB);
 }
